@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
+<CmplSolutions version="1.1">
+   <general>
+       <instanceName>shortest-path.cmpl</instanceName>
+       <nrOfVariables>22</nrOfVariables>
+       <nrOfConstraints>7</nrOfConstraints>
+       <objectiveName>line_1</objectiveName>
+       <objectiveSense>min</objectiveSense>
+       <nrOfSolutions>1</nrOfSolutions>
+       <solverName>CBC</solverName>
+       <solverMsg>normal</solverMsg>
+       <variablesDisplayOptions>(all)</variablesDisplayOptions>
+       <constraintsDisplayOptions>(all)</constraintsDisplayOptions>
+   </general>
+   <solution idx="0" status="optimal" value="22">
+       <variables>
+           <variable idx="0" name="x[1,2]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="1" name="x[1,4]" type="C" activity="1" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="2" name="x[2,1]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="14"/>
+           <variable idx="3" name="x[2,3]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="7"/>
+           <variable idx="4" name="x[2,4]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="11"/>
+           <variable idx="5" name="x[2,5]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="1"/>
+           <variable idx="6" name="x[3,2]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="9"/>
+           <variable idx="7" name="x[3,5]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="8" name="x[4,1]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="10"/>
+           <variable idx="9" name="x[4,2]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="7"/>
+           <variable idx="10" name="x[4,5]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="7"/>
+           <variable idx="11" name="x[4,6]" type="C" activity="1" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="12" name="x[5,2]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="13"/>
+           <variable idx="13" name="x[5,3]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="10"/>
+           <variable idx="14" name="x[5,4]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="23"/>
+           <variable idx="15" name="x[5,6]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="10"/>
+           <variable idx="16" name="x[5,7]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="17" name="x[6,4]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="12"/>
+           <variable idx="18" name="x[6,5]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="6"/>
+           <variable idx="19" name="x[6,7]" type="C" activity="1" lowerBound="0" upperBound="inf" marginal="0"/>
+           <variable idx="20" name="x[7,5]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="18"/>
+           <variable idx="21" name="x[7,6]" type="C" activity="0" lowerBound="0" upperBound="inf" marginal="22"/>
+       </variables>
+       <linearConstraints> 
+           <constraint idx="0" name="line_2" type="E" activity="1" lowerBound="1" upperBound="1" marginal="8"/>
+           <constraint idx="1" name="line_3" type="E" activity="0" lowerBound="0" upperBound="0" marginal="1"/>
+           <constraint idx="2" name="line_4" type="E" activity="0" lowerBound="0" upperBound="0" marginal="0"/>
+           <constraint idx="3" name="line_5" type="E" activity="0" lowerBound="0" upperBound="0" marginal="3"/>
+           <constraint idx="4" name="line_6" type="E" activity="0" lowerBound="0" upperBound="0" marginal="-5"/>
+           <constraint idx="5" name="line_7" type="E" activity="0" lowerBound="0" upperBound="0" marginal="-3"/>
+           <constraint idx="6" name="line_8" type="E" activity="-1" lowerBound="-1" upperBound="-1" marginal="-14"/>
+       </linearConstraints>
+   </solution>
+</CmplSolutions>

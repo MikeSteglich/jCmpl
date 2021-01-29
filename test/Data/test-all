@@ -1,0 +1,16 @@
+#!/bin/bash
+
+	
+	
+	echo "Check test files"
+	./test-jCmpl diet-local
+	./test-jCmpl shortest-path-local
+	./test-jCmpl cuttingStock
+	./test-jCmpl prodmix
+	
+	./test-jCmpl diet-remote
+	./test-jCmpl shortest-path-remote-threads
+
+	echo "done"
+
+	
