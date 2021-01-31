@@ -15,6 +15,8 @@ To use these functionalities in your own Java application you have to link your
 application agains jCMPL.jar and agains all of the jar files
 in jCmpl/lib.
 
+In addition, it is necessary to set an environment variable CMPLHOME, which contains CMPL's 
+home directory.
 
 
 

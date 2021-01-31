@@ -922,11 +922,17 @@ public class Cmpl extends Thread {
        
             
            
-            String cmplBin = System.getenv("CMPLBINARY");
-
+            String cmplBin = System.getenv("CMPLHOME");
             if (cmplBin == null) {
-            	 throw new CmplException("Environment variable CMPLBINARY ist not defined. Cannot run Cmpl binary." );
+                throw new CmplException("Environment variable CMPLHOME is not defined. Cannot run Cmpl binary." );
             }
+            if (os.contains("Windows")) {
+                cmplBin += "bin\\cmpl.exe";
+            } else {
+                cmplBin += "bin/cmpl";
+            }
+
+           
             File cmplBinFile = new File(cmplBin);
             if (cmplBinFile.exists() && cmplBinFile.canExecute()) {
 
