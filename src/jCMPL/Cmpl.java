@@ -112,9 +112,6 @@ public class Cmpl extends Thread {
     private CmplSolutions _solutions;
     private String _solutionString;
     
-    private CmplInfo _cmplInfos;
-    private String _cmplInfoString;
-    
     private boolean _remoteMode;
     private int _remoteStatus;
     
@@ -205,9 +202,6 @@ public class Cmpl extends Thread {
         _status = new CmplMessages();
         _solutions = new CmplSolutions();
         _solutionString = "";
-
-        _cmplInfos = null;
-        _cmplInfoString = "";
 
         _remoteMode = false;
         _remoteStatus = CMPL_UNKNOWN;
@@ -1190,7 +1184,6 @@ public class Cmpl extends Thread {
 
             _status = new CmplMessages();
             _solutions = new CmplSolutions();
-            _cmplInfos = new CmplInfo();
 
             CmplInstance cmplInstance = new CmplInstance();
             instStr = cmplInstance.cmplInstanceStr(_model, _optionsList, _cmplDataStr.toString(), _jobId);
@@ -1295,19 +1288,6 @@ public class Cmpl extends Thread {
                 }
 
                 writeSolFiles();
-
-                ret = cmplServerExecute("getCmplInfo", new Object[]{_jobId});
-                _remoteStatus = (Integer) ret[0];
-
-                if (_remoteStatus != CMPLSERVER_ERROR) {
-                    _cmplInfoString = (String) ret[2];
-                    _cmplInfos.readCmplInfo(_cmplInfoString);
-                } else {
-                    cleanUp();
-                    throw new CmplException((String) ret[1]);
-                }
-
-                writeInfoFiles();
 
                 cleanUp();
 
@@ -2034,7 +2014,7 @@ public class Cmpl extends Thread {
             throw new CmplException("Cmpl.knock can only be used in remote mode");
         }
 
-}
+    }
 
     /**
      * Internal function to execute CMPLServer methods
@@ -2107,43 +2087,4 @@ public class Cmpl extends Thread {
         }
     }
 
-    /**
-     * Writes several statistics to files or stdout - controlled by the command
-     * line arguments -matrix , -s and -l
-     *
-     * @throws CmplException
-     */
-    private void writeInfoFiles() throws CmplException {
-        handleOutput("\n");
-
-        if (!_cmplInfos.statisticsFileName().isEmpty()) {
-            if (_cmplInfos.statisticsFileName().equals("stdOut")) {
-                handleOutput(_cmplInfos.statisticsText());
-                handleOutput("\n");
-            } else {
-                CmplTools.writeAsciiFile(_cmplInfos.statisticsFileName(), _cmplInfos.statisticsText());
-                handleOutput("Statistics written to file: " + _cmplInfos.statisticsFileName());
-            }
-        }
-
-        if (!_cmplInfos.varProdFileName().isEmpty()) {
-            if (_cmplInfos.varProdFileName().equals("stdOut")) {
-                handleOutput(_cmplInfos.varProdText());
-                handleOutput("\n");
-            } else {
-                CmplTools.writeAsciiFile(_cmplInfos.varProdFileName(), _cmplInfos.varProdText());
-                handleOutput("Variable products statistics written to file: " + _cmplInfos.varProdFileName());
-            }
-        }
-
-        if (!_cmplInfos.matrixFileName().isEmpty()) {
-            if (_cmplInfos.matrixFileName().equals("stdOut")) {
-                handleOutput(_cmplInfos.matrixText());
-                handleOutput("\n");
-            } else {
-                CmplTools.writeAsciiFile(_cmplInfos.matrixFileName(), _cmplInfos.matrixText());
-                handleOutput("Generated matrix written to file: " + _cmplInfos.matrixFileName());
-            }
-        }
-    }
 }
