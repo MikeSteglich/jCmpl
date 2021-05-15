@@ -28,7 +28,7 @@
 import jCMPL.CmplException;
 
 
-//export CMPLBINARY=/Users/mike/Documents/Projekte/CMPL-2/Cmpl2-bin/bin/cmpl
+//export CMPLHOME=/Users/mike/Documents/Projekte/CMPL-2/Cmpl2-bin/
 
 public class JCmplTest {
 

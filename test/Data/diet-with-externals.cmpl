@@ -1,0 +1,23 @@
+%data : NUTR set, FOOD set, costs[FOOD], vitamin[NUTR,FOOD], vitMin[NUTR] 
+%include diet-include.cmpl
+%data diet-external-data.cdat
+
+variables:
+	x[FOOD]: integer[2..10];
+
+objectives:
+	cost: costs[]T * x[]->min;
+
+constraints: 
+	line: vitamin[,] * x[] >= vitMin[]  ; 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

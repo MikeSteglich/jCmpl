@@ -33,6 +33,8 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringEscapeUtils;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Handling of the the CmplInstance for jCMPL
@@ -102,94 +104,113 @@ public class CmplInstance {
                     continue;
                 }
 
+                if (line.startsWith("%include")) {
+                    tmpName = line.substring(9).trim();
+                    Path path = Paths.get(tmpName);
+                    Path fileName = path.getFileName();
+                    tmpName1 = fileName.toString();
+                }
+
                 if (line.startsWith("%data")) {
+                    int colonPos = 0;
                     if (line.contains(":")) {
-                        tmpName = line.substring(5, line.indexOf(":")).trim();
+                        colonPos = line.indexOf(":");
+                        tmpName = line.substring(5, colonPos).trim();
                     } else {
                         tmpName = line.substring(5).trim();
                     }
 
-                    if (tmpName.isEmpty()) {
+                    if (!tmpName.isEmpty()) {
+                        Path path = Paths.get(tmpName);
+                        Path fileName = path.getFileName();
+                        tmpName1 = fileName.toString();
+
+                        String replLine = "%data " + tmpName1;
+                        if (colonPos > 0) {
+                            replLine += line.substring(colonPos + 1, line.length());
+                        }
+                        lines.set(lineNr, replLine);
+                    } else {
                         if (!dataString.isEmpty()) {
                             lines.set(lineNr, line.replace("%data", "%data __cmplData__" + cmplFile.getName().substring(0, cmplFile.getName().lastIndexOf('.')) + ".cdat"));
-                            tmpName = "__cmplData__";
+                            tmpName1 = "__cmplData__";
                         } else {
                             tmpName = cmplFile.getName().substring(0, cmplFile.getName().lastIndexOf('.')) + ".cdat";
+                            Path path = Paths.get(tmpName);
+                            Path fileName = path.getFileName();
+                            tmpName1 = fileName.toString();
+
+                            String replLine = "%data " + tmpName1;
+                            if (colonPos > 0) {
+                                replLine += line.substring(colonPos + 1, line.length());
+                            }
+                            lines.set(lineNr, replLine);
                         }
-                    }
-
-                    if (!(_cmplDataList.containsKey(tmpName) || tmpName.equals("__cmplData__"))) {
-                        tmpName1 = "";
-                        if (cmplFile.getParent() == null) {
-                            tmpName1 = cmplFile.getName().substring(0, cmplFile.getName().lastIndexOf('.')) + ".cdat";
-                        } else {
-                            tmpName1 = cmplFile.getParent() + File.separator + cmplFile.getName().substring(0, cmplFile.getName().lastIndexOf('.')) + ".cdat";
-                        }
-
-                        BufferedReader cin = new BufferedReader(new FileReader(tmpName1));
-
-                        String dline = "";
-                        String tmpString = "";
-
-                        while ((dline = cin.readLine()) != null) {
-                            tmpString += dline+"\n";
-                        }
-                        cin.close();
-                        _cmplDataList.put(tmpName1, tmpString);
                     }
                 }
-            
-            lineNr += 1;
 
-        }
+                if (!(_cmplDataList.containsKey(tmpName1) || tmpName1.equals("__cmplData__"))) {
 
-        _instStr.append("<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-        _instStr.append("<CmplInstance version=\"1.0\">\n");
-        _instStr.append("<general>\n");
-        _instStr.append("<name>").append(cmplFile.getName()).append("</name>\n");
-        _instStr.append("<jobId>").append(jobId).append("</jobId>\n");
-        _instStr.append("</general>\n");
+                    BufferedReader cin = new BufferedReader(new FileReader(tmpName));
 
-        if (optList.size() > 0) {
-            _instStr.append("<options>\n");
+                    String dline = "";
+                    String tmpString = "";
 
-            for (Map.Entry<Integer, String> o : optList.entrySet()) {
-                _instStr.append("<opt>").append(o.getValue()).append("</opt>\n");
+                    while ((dline = cin.readLine()) != null) {
+                        tmpString += dline + "\n";
+                    }
+                    cin.close();
+                    _cmplDataList.put(tmpName1, tmpString);
+                }
+
+                lineNr += 1;
+
             }
 
-            _instStr.append("</options>\n");
-        }
+            _instStr.append("<?xml version = \"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
+            _instStr.append("<CmplInstance version=\"2.0\">\n");
+            _instStr.append("<general>\n");
+            _instStr.append("<name>").append(cmplFile.getName()).append("</name>\n");
+            _instStr.append("<jobId>").append(jobId).append("</jobId>\n");
+            _instStr.append("<preComp>yes</preComp>\n");
+            _instStr.append("</general>\n");
 
-        _instStr.append("<problemFiles>\n");
-        _instStr.append("<file name=\"").append(cmplFile.getName()).append("\" type=\"cmplMain\">\n");
+            if (optList.size() > 0) {
+                _instStr.append("<options>\n");
 
-        String tmpStr = "";
-        for (String line : lines) {
-            tmpStr += line + "\n";
-        }
-        _instStr.append(StringEscapeUtils.escapeXml(tmpStr));
+                for (Map.Entry<Integer, String> o : optList.entrySet()) {
+                    _instStr.append("<opt>").append(o.getValue()).append("</opt>\n");
+                }
 
-        _instStr.append("\n");
-        _instStr.append("</file>\n");
+                _instStr.append("</options>\n");
+            }
 
-        for (Map.Entry<String, String> e : _cmplDataList.entrySet()) {
-            _instStr.append("<file name=\"").append(e.getKey()).append("\" type=\"cmplData\">\n");
-            _instStr.append(StringEscapeUtils.escapeXml(e.getValue()));
+            _instStr.append("<problemFiles>\n");
+            _instStr.append("<file name=\"").append(cmplFile.getName()).append("\">\n");
+
+            String tmpStr = "";
+            for (String line : lines) {
+                tmpStr += line + "\n";
+            }
+            _instStr.append(StringEscapeUtils.escapeXml(tmpStr));
+
             _instStr.append("\n");
             _instStr.append("</file>\n");
-        }
-        _instStr.append("</problemFiles>\n");
-        _instStr.append("</CmplInstance>\n");
 
-    }
-    catch(IOException e
+            for (Map.Entry<String, String> e : _cmplDataList.entrySet()) {
+                _instStr.append("<file name=\"").append(e.getKey()).append("\">\n");
+                _instStr.append(StringEscapeUtils.escapeXml(e.getValue()));
+                _instStr.append("\n");
+                _instStr.append("</file>\n");
+            }
+            _instStr.append("</problemFiles>\n");
+            _instStr.append("</CmplInstance>\n");
 
-    
-        ) {
+        } catch (IOException e) {
             throw new CmplException("IO error : " + e);
-    }
+        }
 
-    return _instStr.toString() ;
-}
+        return _instStr.toString();
+    }
 
 }

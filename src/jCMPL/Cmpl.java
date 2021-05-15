@@ -1071,7 +1071,6 @@ public class Cmpl extends Thread {
                 getSolver();
 
                 ret = (Object[]) _cmplServer.execute("getJobId", new Object[]{file.getName(), _solver, _compatibility});
-                //ret = cmplServerExecute("getJobId", new Object[]{file.getName(), _solver, _compatibility});
                 
                 _remoteStatus = (Integer) ret[0];
                 
@@ -1987,7 +1986,7 @@ public class Cmpl extends Thread {
      /**
      * Internal function for the knocking a CMPLGridScheduler
      *
-     * @throws CmplException
+     * @throws CmplExceptioncx
      */
     private void knockScheduler() throws CmplException {
 
