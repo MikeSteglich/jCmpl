@@ -1,14 +1,13 @@
 %data : NUTR set, FOOD set, costs[FOOD], vitamin[NUTR,FOOD], vitMin[NUTR] 
 
-variables:
+var:
 	x[FOOD]: integer[2..10];
 
-objectives:
-	cost: costs[]T * x[]->min;
+obj:
+	cost: costs^T * x->min;
 
-constraints: 
-	res: vitamin[,] * x[] >= vitMin[]; 
- 
+con: 
+	vit: vitamin * x >= vitMin; 
  
  
  

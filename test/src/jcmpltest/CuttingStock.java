@@ -1,7 +1,7 @@
 /* ****************************************************************************
  * This code is part of jCMPL
  *
- * Copyright (C) Mike Steglich / B. Knie Technical University of Applied
+ * Copyright (C) 2013 Mike Steglich / B. Knie Technical University of Applied
  * Sciences Wildau, Germany
  *
  * jCMPL is a project of the Technical University of Applied Sciences Wildau
@@ -24,7 +24,7 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * ****************************************************************************/
 
-//package jcmpltest;
+package jcmpltest;
 
 import jCMPL.*;
 import java.io.BufferedWriter;
@@ -40,11 +40,8 @@ public class CuttingStock {
             Cmpl patternGen = new Cmpl("cut-pattern.cmpl");
             cuttingOpt.setOption("-no-remodel");
             
-            //cuttingOpt.setOption("-solver cplex");	
-            //patternGen.setOption("-solver cplex");
-
-            //cuttingOpt.setOutput(true);
-            //patternGen.setOutput(true);
+            //cuttingOpt.setOption("%arg -solver cplex");	
+            //patternGen.setOption("%arg -solver cplex");
 
             CmplParameter r = new CmplParameter("rollWidth");
             r.setValues(110);

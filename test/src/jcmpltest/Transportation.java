@@ -18,12 +18,15 @@
  * jCMPL is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU Lesser General Public # License for more
- * detailm.solution().
+ * details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * ****************************************************************************/
+package jcmpltest;
+
 import jCMPL.*;
+
 import java.util.ArrayList;
 
 public class Transportation {
@@ -32,48 +35,44 @@ public class Transportation {
         try {
             Cmpl m = new Cmpl("transportation.cmpl");
 
-            CmplSet routes = new CmplSet("routes", 2);
-            int[][] arcs = {{1, 1}, {1, 2}, {1, 4}, {2, 2}, {2, 3}, {2, 4}, {3, 1}, {3, 3}};
+            CmplSet routes = new CmplSet("routes",2);
+            int[][] arcs = {{1,1},{1,2},{1,4},{2,2},{2,3},{2,4},{3,1},{3,3}};
             routes.setValues(arcs);
-
+        
             CmplSet plants = new CmplSet("plants");
-            plants.setValues(1, 3);
-
+            plants.setValues(1,3);
+            
             CmplSet centers = new CmplSet("centers");
             centers.setValues(1, 1, 4);
-
+            
             CmplParameter costs = new CmplParameter("c", routes);
-            Integer[] costArr = {3, 2, 6, 5, 2, 3, 2, 4};
+            Integer[] costArr = {3,2,6,5,2,3,2,4};
             costs.setValues(costArr);
-
-            CmplParameter s = new CmplParameter("s", plants);
+            
+            CmplParameter s = new CmplParameter("s",plants);
             ArrayList sList = new ArrayList();
             sList.add(5000);
             sList.add(6000);
             sList.add(2500);
             s.setValues(sList);
-
-            CmplParameter d = new CmplParameter("d", centers);
-            int[] dArr = {6000, 4000, 2000, 2500};
+            
+            CmplParameter d = new CmplParameter("d",centers);
+            int[] dArr = {6000,4000,2000,2500};
             d.setValues(dArr);
-
+            
             m.setSets(routes, plants, centers);
-            m.setParameters(costs, s, d);
-
+            m.setParameters(costs,s,d);
+            
             m.setOutput(true);
-            m.setOption("-display nonZeros");
-
-            //start CmplServer first with cmplServer -start
-            //m.connect("http://127.0.0.1:8008");
-
+            m.setOption("-solver cbc");
+            m.connect("http://127.0.0.1:8008");
+           // m.debug(true);
             m.solve();
 
-            if (m.solverStatus() == Cmpl.SOLVER_OK) {
 
-                //standard report
+            if (m.solverStatus() == Cmpl.SOLVER_OK) {
                 m.solutionReport();
 
-                //example to obtain the solution manually 
                 System.out.println("Objective name      :" + m.objectiveName());
                 System.out.println("Nr. of Variables    :" + m.nrOfVariables());
                 System.out.println("Nr. of Constraints  :" + m.nrOfConstraints());
@@ -81,6 +80,7 @@ public class Transportation {
                 System.out.println("Display variables   :" + m.varDisplayOptions());
                 System.out.println("Display constraints :" + m.varDisplayOptions());
 
+        
                 System.out.println("Solution nr.        :" + (m.solution().idx() + 1));
                 System.out.println("Objective value     :" + m.solution().value() + " " + m.objectiveSense());
 
@@ -91,19 +91,16 @@ public class Transportation {
                     System.out.println(c.idx() + " " + c.name() + " " + c.type() + " " + c.activity() + " " + c.lowerBound() + " " + c.upperBound() + " " + c.marginal());
                 }
 
-                //example to obtain a variable by their name 
-                CmplSolArray x = (CmplSolArray) m.getVarByName("x");
-                for (int[] tuple : (int[][]) routes.values()) {
-                    if (x.get(tuple)!=null) {
-                        System.out.print(String.valueOf(tuple[0]) + " " + String.valueOf(tuple[1]) + " ");
-                        System.out.println(x.get(tuple).activity());
-                    }
-                }
-
             } else {
                 System.out.println("Solver failed " + m.solver() + " " + m.solverMessage());
             }
 
+            CmplSolArray x = (CmplSolArray) m.getVarByName("x");
+            for (int[] tuple : (int[][]) routes.values()) {
+                System.out.print(String.valueOf(tuple[0])+ " "+ String.valueOf(tuple[1])+" ");
+                System.out.println(x.get(tuple).activity());
+            }
+      
         } catch (CmplException e) {
 
             System.out.println(e);

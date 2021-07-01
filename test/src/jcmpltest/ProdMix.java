@@ -1,7 +1,7 @@
 /* ****************************************************************************
  * This code is part of jCMPL
  *
- * Copyright (C) Mike Steglich / B. Knie Technical University of Applied
+ * Copyright (C) 2013 Mike Steglich / B. Knie Technical University of Applied
  * Sciences Wildau, Germany
  *
  * jCMPL is a project of the Technical University of Applied Sciences Wildau
@@ -24,11 +24,16 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * ****************************************************************************/
 
-//package jcmpltest;
+package jcmpltest;
 
 import jCMPL.*;
 
 
+
+/**
+ *
+ * @author mike
+ */
 public class ProdMix {
     
      public ProdMix() throws CmplException {

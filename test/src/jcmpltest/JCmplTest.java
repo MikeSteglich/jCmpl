@@ -1,7 +1,7 @@
 /* ****************************************************************************
  * This code is part of jCMPL
  *
- * Copyright (C) Mike Steglich / B. Knie Technical University of Applied
+ * Copyright (C) 2013 Mike Steglich / B. Knie Technical University of Applied
  * Sciences Wildau, Germany
  *
  * jCMPL is a project of the Technical University of Applied Sciences Wildau
@@ -23,42 +23,42 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * ****************************************************************************/
-//package jcmpltest;
+package jcmpltest;
 
 import jCMPL.CmplException;
 
-
-//export CMPLHOME=/Users/mike/Documents/Projekte/CMPL-2/Cmpl2-bin/
-
+/**
+ *
+ * @author mike
+ */
 public class JCmplTest {
 
     /**
      * @param args the command line arguments
      */
+  
     public static void main(String[] args) throws CmplException {
 
         System.out.println("Creating test files ");
 
-        Diet diet1 = new Diet("diet-local", 0);
+        Diet diet1 = new Diet("diet-local", 0, false);
         System.out.println("... diet-local");
         ShortestPath sp = new ShortestPath();
         System.out.println("... shortest-path");
-        
         CuttingStock cut = new CuttingStock();
         System.out.println("... cuttingStock");
-
         ProdMix p = new ProdMix();
         System.out.println("... prodMix");
-        
-
-        
+               
         if (args[0].equals("1")) {
-            Diet diet2 = new Diet("diet-remote", 1);
+            Diet diet2 = new Diet("diet-remote", 1, false);
             System.out.println("... diet-remote");
+            Diet diet3 = new Diet("diet-remote-with-externals", 1, true);
+            System.out.println("... diet-remote-with-externals");
             shortestPathThreads st = new shortestPathThreads();
             System.out.println("... shortestPathThreads");
         }
-
+        
         System.out.println("done");
 
 

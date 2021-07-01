@@ -780,6 +780,8 @@ public class Cmpl extends Thread {
      * @throws CmplException
      */
     public void solve() throws CmplException {
+        
+        _isCleaned = false;
 
         int Min = 100000;
         int Max = 999999;
@@ -920,10 +922,14 @@ public class Cmpl extends Thread {
             if (cmplBin == null) {
                 throw new CmplException("Environment variable CMPLHOME is not defined. Cannot run Cmpl binary." );
             }
+            
+            if (!cmplBin.endsWith(File.separator))
+                cmplBin+=File.separator;
+            
             if (os.contains("Windows")) {
-                cmplBin += "bin\\cmpl.exe";
+                cmplBin += "bin"+File.separator+"cmpl.exe";
             } else {
-                cmplBin += "bin/cmpl";
+                cmplBin += "bin"+File.separator+"/cmpl";
             }
 
            
@@ -936,14 +942,6 @@ public class Cmpl extends Thread {
                 
                 cmdList.add("-solution");
                 
-                if (_compatibility<3) {
-                    cmdList.add("-e");
-                    cmdList.add(_cmplMsgFile);
-                }            
-                if (os.contains("Windows")) {
-                    cmdList.add("-cmplJava");
-                }
-
                 if (!_optionsList.isEmpty()) {
                     for (Map.Entry<Integer, String> o : _optionsList.entrySet()) {
                         
@@ -996,12 +994,12 @@ public class Cmpl extends Thread {
                 }
 
                 _solutions.readSolution();
-                cleanUp();
+              
             } else {
                 throw new CmplException("Cant't execute Cmpl binary: " + cmplBin);
             }
-            cleanUp();
         }
+        cleanUp();
     }
 
       /**

@@ -49,7 +49,7 @@ public class CmplException extends Exception
     public CmplException(String s, ArrayList<CmplMsg> msgList) {
         _msg += s;
         for ( CmplMsg m : msgList ) {
-            _msg += "\n" + m.type() + " in file " + m.file() + " at line " + m.line() + " : " + m.description();
+            _msg += "\n" + m.type() + " in module " + m.module() + " at location " + m.location() + " : " + m.description();
         }
     }
     

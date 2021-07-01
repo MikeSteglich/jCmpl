@@ -43,8 +43,8 @@ public class CmplMsg
 {
     
     private String _type;
-    private String _file;
-    private String _line;
+    private String _module;
+    private String _location;
     private String _description;
     
     /**
@@ -53,8 +53,8 @@ public class CmplMsg
     public CmplMsg()    
     {
         _type = "";
-        _file = "";
-        _line = "";
+        _module = "";
+        _location = "";
         _description = "";
     } 
 
@@ -79,8 +79,8 @@ public class CmplMsg
      * Returns the name of the CMPL file in that the error or warning occurs 
      * @return CMPL file name r CmplData file name
      */
-    public String file() {
-        return _file;
+    public String module() {
+        return _module;
     }
 
     /**
@@ -88,16 +88,16 @@ public class CmplMsg
      * Used by CMPL 
      * @param file file name
      */
-    protected void setFile(String file) {
-        this._file = file;
+    protected void setModule(String file) {
+        this._module = file;
     }
 
     /**
      * Returns the line in the CMPL file in that the error or warning occurs
      * @return line
      */
-    public String line() {
-        return _line;
+    public String location() {
+        return _location;
     }
 
     /**
@@ -105,8 +105,8 @@ public class CmplMsg
      * Used by CMPL
      * @param line line
      */
-    protected void setLine(String line) {
-        this._line = line;
+    protected void setLocation(String line) {
+        this._location = line;
     }
 
     /**
@@ -301,8 +301,8 @@ class CmplMessages {
                     }
                     CmplMsg x = new CmplMsg();
                     x.setType(tmpList.get(0));
-                    x.setFile(tmpList.get(1));
-                    x.setLine(tmpList.get(2));
+                    x.setModule(tmpList.get(1));
+                    x.setLocation(tmpList.get(2));
                     x.setDesrciption(StringEscapeUtils.unescapeXml(tmpList.get(3)));
                     _cmplMessageList.add(x);
 

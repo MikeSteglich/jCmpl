@@ -1,6 +1,6 @@
 CMPL csv export
 
-Problem;diet.cmpl
+Problem;diet-with-externals.cmpl
 Nr. of variables;8
 Nr. of constraints;4
 Objective name;cost
@@ -22,7 +22,7 @@ x[SPG];I;10;2.000000;10.000000;-
 x[TUR];I;2;2.000000;10.000000;-
 Constraints
 Name;Type;Activity;LowerBound;UpperBound;Marginal
-res[A];G;1500.000000;700.000000;Infinity;-
-res[B1];G;1330.000000;700.000000;Infinity;-
-res[B2];G;860.000000;700.000000;Infinity;-
-res[C];G;700.000000;700.000000;Infinity;-
+line[A];G;1500.000000;700.000000;Infinity;-
+line[B1];G;1330.000000;700.000000;Infinity;-
+line[B2];G;860.000000;700.000000;Infinity;-
+line[C];G;700.000000;700.000000;Infinity;-

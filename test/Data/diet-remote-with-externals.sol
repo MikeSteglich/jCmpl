@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------------
-Problem              diet.cmpl
+Problem              diet-with-externals.cmpl
 Nr. of variables     8
 Nr. of constraints   4
 Objective name       cost
@@ -27,8 +27,8 @@ x[TUR]                  I                   2                2.00               
 Constraints         
 Name                 Type            Activity          LowerBound          UpperBound            Marginal
 ---------------------------------------------------------------------------------------------------------
-res[A]                  G             1500.00              700.00            Infinity                   -
-res[B1]                 G             1330.00              700.00            Infinity                   -
-res[B2]                 G              860.00              700.00            Infinity                   -
-res[C]                  G              700.00              700.00            Infinity                   -
+line[A]                 G             1500.00              700.00            Infinity                   -
+line[B1]                G             1330.00              700.00            Infinity                   -
+line[B2]                G              860.00              700.00            Infinity                   -
+line[C]                 G              700.00              700.00            Infinity                   -
 ---------------------------------------------------------------------------------------------------------

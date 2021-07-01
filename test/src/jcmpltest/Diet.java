@@ -1,7 +1,7 @@
 /* ****************************************************************************
  * This code is part of jCMPL
  *
- * Copyright (C) Mike Steglich / B. Knie Technical University of Applied
+ * Copyright (C) 2013 Mike Steglich / B. Knie Technical University of Applied
  * Sciences Wildau, Germany
  *
  * jCMPL is a project of the Technical University of Applied Sciences Wildau
@@ -24,7 +24,7 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  * ****************************************************************************/
 
-//package jcmpltest;
+package jcmpltest;
 
 import jCMPL.*;
 import java.io.BufferedWriter;
@@ -33,15 +33,25 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author mike
+ */
 public class Diet {
 
-    public Diet(String fName, int mode) throws CmplException {
+    public Diet(String fName, int mode, Boolean inclMode) throws CmplException {
         try {
+            String modName="";
 
-            Cmpl model = new Cmpl("diet.cmpl");
-
+            if (inclMode==false) {
+                modName="diet.cmpl";
+            } else {
+                modName="diet-with-externals.cmpl";
+            }
+            
+            Cmpl model = new Cmpl(modName);
             CmplSet nutr = new CmplSet("NUTR");
-            ArrayList<String> nutrLst = new ArrayList<String>();
+            ArrayList nutrLst = new ArrayList<String>();
             nutrLst.add("A");
             nutrLst.add("B1");
             nutrLst.add("B2");
@@ -72,7 +82,6 @@ public class Diet {
 
             model.setSets(nutr, food);
             model.setParameters(costs, vitmin, vitamin);
-            //model.setOutput(true);
 
             model.setOption("-solver glpk");
 
@@ -82,10 +91,7 @@ public class Diet {
 
             //model.debug(true);
             model.solve();
-            
             BufferedWriter out = new BufferedWriter(new FileWriter(fName + ".stdout"));
-            
-        
 
             if (model.solverStatus() == Cmpl.SOLVER_OK) {
 

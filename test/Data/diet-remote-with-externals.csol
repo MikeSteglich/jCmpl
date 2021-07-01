@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
 <CmplSolutions version="1.1">
    <general>
-       <instanceName>diet.cmpl</instanceName>
+       <instanceName>diet-with-externals.cmpl</instanceName>
        <nrOfVariables>8</nrOfVariables>
        <nrOfConstraints>4</nrOfConstraints>
        <objectiveName>cost</objectiveName>
@@ -24,10 +24,10 @@
            <variable idx="7" name="x[TUR]" type="I" activity="2" lowerBound="2" upperBound="10" marginal="NaN"/>
        </variables>
        <linearConstraints> 
-           <constraint idx="0" name="res[A]" type="G" activity="1500" lowerBound="700" upperBound="inf" marginal="NaN"/>
-           <constraint idx="1" name="res[B1]" type="G" activity="1330" lowerBound="700" upperBound="inf" marginal="NaN"/>
-           <constraint idx="2" name="res[B2]" type="G" activity="860" lowerBound="700" upperBound="inf" marginal="NaN"/>
-           <constraint idx="3" name="res[C]" type="G" activity="700" lowerBound="700" upperBound="inf" marginal="NaN"/>
+           <constraint idx="0" name="line[A]" type="G" activity="1500" lowerBound="700" upperBound="inf" marginal="NaN"/>
+           <constraint idx="1" name="line[B1]" type="G" activity="1330" lowerBound="700" upperBound="inf" marginal="NaN"/>
+           <constraint idx="2" name="line[B2]" type="G" activity="860" lowerBound="700" upperBound="inf" marginal="NaN"/>
+           <constraint idx="3" name="line[C]" type="G" activity="700" lowerBound="700" upperBound="inf" marginal="NaN"/>
        </linearConstraints>
    </solution>
 </CmplSolutions>
